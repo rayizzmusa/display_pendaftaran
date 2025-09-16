@@ -189,7 +189,7 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                 }
 
                 $vdata = "nama_pasien, id_asuransi, tgl_lahir, jenis_kelamin, identitas_pasien, no_identitas, nomor_asuransi, identitas, tgl_daftar, id_instalasi, id_jadwal_dokter, no_antri, jenis_daftar, hapus, tgl_insert";
-                $vvalues = "?, \"$id_asuransi\", ?, ?, \"$identitas_pasien\", ?, ?, \"$identitas\", \"$ndate\", \"$gid\", \"$gid2\", \"$next_no_antri\", \"2\", \"0\", \"$ndatetime\"";
+                $vvalues = "?, \"$id_asuransi\", ?, ?, \"$identitas_pasien\", ?, ?, \"1\", \"$ndate\", \"$gid\", \"$gid2\", \"$next_no_antri\", \"2\", \"0\", \"$ndatetime\"";
             }
     }
 }
