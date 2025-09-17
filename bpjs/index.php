@@ -276,7 +276,7 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
 
                                     <div class=\"row\">
                                         <div class=\"col-md-6\">
-                                            <a href=\"$link_back&act2=daftar&gid=$gid&gid2=$idJadwal&gket=tdk\">
+                                            <a href=\"$link_back&act2=daftar&gid=$gid&gid2=$idJadwal&gket=tdk&act3=input\">
                                                 <div class=\"box-btn bg-aqua\" style=\"height: 100px; display: flex; align-items: center; justify-content: center;\">
                                                     <div class=\"box-body\">
                                                         <span class=\"info-box-number\" style=\"font-size: 30px;\">TIDAK</span>
@@ -285,7 +285,7 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
                                             </a>
                                         </div>
                                         <div class=\"col-md-6\">
-                                            <a href=\"$link_back&act2=daftar&gid=$gid&gid2=$idJadwal&gket=ya\">
+                                            <a href=\"$link_back&act2=daftar&gid=$gid&gid2=$idJadwal&gket=ya&act3=input\">
                                                 <div class=\"box-btn bg-aqua\" style=\"height: 100px; display: flex; align-items: center; justify-content: center;\">
                                                     <div class=\"box-body\">
                                                         <span class=\"info-box-number\" style=\"font-size: 30px;\">YA</span>
@@ -333,6 +333,10 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
 
         case "daftar":
             include "formdaftar/index.php";
+            break;
+
+        case "konfirmasi":
+            include "konfirmasi/index.php";
             break;
     }
 }

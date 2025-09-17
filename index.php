@@ -158,7 +158,7 @@ $default = "a_disp_pendaftaran";
             transform: scale(0.98);
         }
     </style>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../plugins/jQuery/jQuery-3.3.1.js"></script>
 </head>
 
@@ -252,8 +252,9 @@ $default = "a_disp_pendaftaran";
     <script src="../plugins/daterangepicker/daterangepicker.js"></script>
     <script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
     <script src="../plugins/timepicker/bootstrap-timepicker.js"></script>
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.10.0/js/bootstrap-datepicker.min.js"></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!--  -->
+
 
 
     <script>

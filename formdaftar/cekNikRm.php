@@ -8,7 +8,7 @@ $jenis_identitas = isset($_POST['jenis_identitas']) ? trim($_POST['jenis_identit
 
 
 // Validasi panjang input
-if (empty($identitas) || strlen($identitas) != 16) {
+if (empty($identitas) || strlen($identitas) > 16) {
     echo json_encode([
         'status' => 'error',
         'message' => 'Input tidak valid.'
