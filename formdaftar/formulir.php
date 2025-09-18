@@ -35,13 +35,16 @@ if ($gket == "ya") {
 if ($act == "bpjs") {
     $form = "<div class=\"form-group\">
                     <label class=\"col-sm-3\">Nomor BPJS <span style=\"color:red\">*</span></label>
-                    <div class=\"col-sm-4\">
+                    <div class=\"col-sm-8\">
                         <input type=\"text\" name=\"nomor_asuransi\" id=\"nomor-asuransi\" class=\"form-control\" $readonly required/>
                     </div>
                 </div>";
 } else if ($act == "nonbpjs") {
     $form = "";
 }
+
+$ndt1 = date("YmdHis");
+$kode_booking = "RSUMM_$ndt1";
 
 echo "<div class=\"row\">
             <div class=\"col-md-12\">
@@ -87,25 +90,26 @@ echo "<div class=\"row\">
                                     </div>
                                     <div class=\"form-group\">
                                         <label class=\"col-sm-3\">No. KTP/NIK/RM <span style=\"color:red\">*</span></label>
-                                        <div class=\"col-sm-4\">
+                                        <div class=\"col-sm-8\">
                                             <input type=\"text\" name=\"identitas\" id=\"identitas-pasien\" class=\"form-control\" required/>
+                                            <input type=\"hidden\" name=\"kode_booking\" value=\"$kode_booking\"/>
                                             <small>Periksa apakah no.ktp/nik/rm sudah terdaftar sebagai pasien RSU UMM</small>
                                             <div id=\"notifikasi-pasien\"></div>
                                         </div>
-                                        <div class=\"col-sm-4\">
+                                        <div class=\"col-sm-1\">
                                         <button type=\"button\" class=\"btn bg-maroon\" id=\"btn-cek\"><i class=\"fa fa-search\"></i></button>
                                         </div>
                                     </div>
                                     <div class=\"form-group\">
                                         <label class=\"col-sm-3\">Nama Lengkap <span style=\"color:red\">*</span></label>
-                                        <div class=\"col-sm-4\">
+                                        <div class=\"col-sm-8\">
                                             <input type=\"text\" name=\"nama_pasien\" id=\"nama-pasien\" class=\"form-control\" $readonly required/>
                                         </div>
                                     </div>
                                     $form
                                     <div class=\"form-group\">
                                         <label class=\"col-sm-3\">Tanggal Lahir <span style=\"color:red\">*</span></label>
-                                        <div class=\"col-sm-4\">
+                                        <div class=\"col-sm-8\">
                                             <input type=\"text\" name=\"tgl_lahir\" id=\"tgl-lahir\" class=\"form-control $datepicker\" autocomplete =\"off\" placeholder=\"yyyy-mm-dd\" $readonly required/>
                                         </div>
                                     </div>

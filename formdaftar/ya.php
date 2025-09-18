@@ -19,7 +19,7 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                             </nav>";
             echo "  </div>";
             echo "  <div class=\"col-md-6 text-center\">";
-            echo "    <p>Silahkan isi data diri pasien sesuai dengan Nomor KTP/NIK !</p>";
+            echo "    <p>Silahkan isi data diri pasien sesuai dengan Nomor KTP/NIK/RM !</p>";
             echo "  </div>";
             echo "</div>";
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -81,14 +81,15 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                             $nomor_asuransi = '';
                         }
 
-                        $vdata = "nama_pasien, id_asuransi, tgl_lahir, jenis_kelamin, identitas_pasien, no_identitas, nomor_rm, nomor_asuransi, identitas, tgl_daftar, id_instalasi, id_jadwal_dokter, no_antri, jenis_daftar, hapus, tgl_insert";
 
-                        $sqld2 = "insert into ps_pendaftaran_online ($vdata) values (?, ?, ?, ?, ?, ?, ?, ?, \"0\", ?, ?, ?, ?, \"2\", \"0\", ?)";
+                        $vdata = "nama_pasien, id_asuransi, tgl_lahir, jenis_kelamin, identitas_pasien, no_identitas, nomor_rm, nomor_asuransi, identitas, tgl_daftar, id_instalasi, id_jadwal_dokter, no_antri, kode_booking, jenis_daftar, hapus, tgl_insert";
+
+                        $sqld2 = "insert into ps_pendaftaran_online ($vdata) values (?, ?, ?, ?, ?, ?, ?, ?, \"0\", ?, ?, ?, ?, ?, \"2\", \"0\", ?)";
 
                         $stmt2 = mysqli_prepare($db_result, $sqld2);
                         mysqli_stmt_bind_param(
                             $stmt2,
-                            "sisiissssiiis", // sesuaikan jumlah/tipe data
+                            "sisiissssiiiss", // sesuaikan jumlah/tipe data
                             $nama_pasien,
                             $id_asuransi,
                             $tgl_lahir,
@@ -101,12 +102,14 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                             $gid,
                             $gid2,
                             $next_no_antri,
+                            $kode_booking,
                             $ndatetime
                         );
                         $sukses = mysqli_stmt_execute($stmt2);
                         mysqli_stmt_close($stmt2);
 
                         if ($sukses) {
+                            $id_daftar = mysqli_insert_id($db_result);
                             mysqli_commit($db_result);
                             echo "
                             <script>
@@ -117,7 +120,7 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                                     showConfirmButton: false,
                                     timer: 3000
                                 }).then(() => {
-                                    window.location.href = '$link_back&act2=konfirmasi&gid=$gid&gid2=$gid2&gid3=$next_no_antri';
+                                    window.location.href = '$link_back&act2=konfirmasi&gid=$gid&gid2=$gid2&gid3=$id_daftar';
                                 });
                             </script>
                             ";
