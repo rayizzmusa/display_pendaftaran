@@ -125,10 +125,18 @@ echo "<div class=\"row\">
                                         </div>
                                     </div>
 
+                                    <div class=\"row\">
+                                        <div class=\"col-md-12\">
+                                            <div class=\"alert alert-info\">
+                                                *** Pastikan data yang diisi sesuai dengan identitas pasien sebelum mencetak tiket
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class=\"form-group\">
                                         <div class=\"col-md-12 text-center\">
                                             <a href=\"$link_back&act2=poli&gid=$gid\" class=\"btn bg-navy\"><i class=\"fa fa-caret-left\"></i> Kembali</a>
-                                            <button type=\"submit\" class=\"btn btn-info\"><i class=\"fa fa-save\"></i> Daftar</button>
+                                            <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-print\"></i> Cetak</button>
                                         </div>
                                     </div>
                                 </div>

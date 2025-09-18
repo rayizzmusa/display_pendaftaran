@@ -205,23 +205,28 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
                             $bg = "background-color: rgba(179, 0, 0, 0.2);";
                             $stts = "<span style=\"color: red\"><b>Dokter Off</b></span>";
                             $link = "style=\"text-decoration:none; color:inherit;\"";
+                            $btn_aksi = '';
                         } else if ($data['status_ganti'] == '1') {
                             $bg = "background-color: rgba(179, 146, 0, 0.2);";
                             $stts = "<span style=\"color: orange\"><b>Selesai</b></span>";
                             $link = "style=\"text-decoration:none; color:inherit;\"";
+                            $btn_aksi = '';
                         } else {
                             if ($data['kuota_terpakai'] == $data['kuota_bpjs'] - 1) {
                                 $bg = "background-color: rgba(0, 179, 0, 0.2);";
                                 $stts = "<span style=\"color: red\"><b>Kurang 1</b></span>";
-                                $link = "href=\"#\" style=\"text-decoration:none; color:inherit;\" data-toggle=\"modal\" data-target=\"#$modalId\"";
+                                $link = "href=\"#\" data-toggle=\"modal\" data-target=\"#$modalId\"";
+                                $btn_aksi = "<a $link class=\"btn btn-xs btn-info\">Daftar</a>";
                             } else if ($data['kuota_terpakai'] == $data['kuota_bpjs']) {
                                 $bg = "background-color: rgba(185, 185, 185, 0.38);";
                                 $stts = "<span style=\"color: red\"><b>Kuota penuh</b></span>";
                                 $link = "style=\"text-decoration:none; color:inherit;\"";
+                                $btn_aksi = '';
                             } else {
                                 $bg = "background-color: rgba(0, 179, 0, 0.2);";
                                 $stts = "<span style=\"color: green\"><b>Tersedia</b></span>";;
-                                $link = "href=\"#\" style=\"text-decoration:none; color:inherit;\" data-toggle=\"modal\" data-target=\"#$modalId\"";
+                                $link = "href=\"#\" data-toggle=\"modal\" data-target=\"#$modalId\"";
+                                $btn_aksi = "<a $link class=\"btn btn-xs btn-info\">Daftar</a>";
                             }
                         }
 
@@ -250,10 +255,9 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
                         $tbody_all .= "
                             <tbody id=\"$statusId\" $hidden>
                                 <tr>
-                                    <td>$idJadwal</td>
                                     <td>{$data['kuota_bpjs']}</td>
                                     <td>$stts</td>
-                                    <td>ssh</td>
+                                    <td>$btn_aksi</td>
                                 </tr>
                             </tbody>
                         ";
@@ -321,9 +325,8 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
                                             <table class=\"table table-bordered table-striped datatable\">
                                                 <thead>
                                                     <tr>
-                                                        <th>#</th>
-                                                        <th>Kuota Pasien</th>
-                                                        <th>Status</th>
+                                                        <th width=\"150\">Kuota Pasien</th>
+                                                        <th width=\"150\">Status</th>
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
