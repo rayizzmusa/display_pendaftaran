@@ -253,8 +253,6 @@ $default = "a_disp_pendaftaran";
     <script src="../plugins/datepicker/bootstrap-datepicker.js"></script>
     <script src="../plugins/timepicker/bootstrap-timepicker.js"></script>
 
-    <!--  -->
-
 
 
     <script>

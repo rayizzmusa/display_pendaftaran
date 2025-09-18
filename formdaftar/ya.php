@@ -5,7 +5,8 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
 
     $link_back = "$default?act=$act";
     switch ($act3) {
-        default:
+        case "input":
+        case "proses":
             echo "<div class=\"row\" style=\"align-items: center;\">";
             echo "  <div class=\"col-md-3\">";
             echo "      <nav aria-label=\"breadcrumb\">
@@ -21,32 +22,145 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
             echo "    <p>Silahkan isi data diri pasien sesuai dengan Nomor KTP/NIK !</p>";
             echo "  </div>";
             echo "</div>";
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                if (count($_POST) > 0) {
+                    foreach ($_POST as $pkey => $pvalue) {
+                        $post1 = mysqli_escape_string($db_result, $pvalue);
+                        $post1 = preg_replace('/\s+/', ' ', $post1);
+                        $post1 = trim($post1);
+
+                        $arpost[$pkey] = "$post1";
+                    }
+                    extract($arpost);
+                }
+
+                $no_identitas = "";
+                $nomor_rm = "";
+                $error = "";
+                $error .= (!ctype_digit($arpost['identitas'])) ? "&bull; Format isian hanya boleh angka 0-9<br/>" : "";
+                if ($arpost['jenis_identitas'] == 'nik') {
+                    $error .= (strlen($arpost['identitas']) != 16) ? "&bull; No.KTP/NIK harus 16 digit<br/>" : "";
+                    $identitas_pasien = 1;
+                    $no_identitas = $arpost['identitas'];
+                } else if ($arpost['jenis_identitas'] == 'rm') {
+                    $error .= (strlen($arpost['identitas']) != 7) ? "&bull; Nomor RM harus 7 digit<br/>" : "";
+                    $identitas_pasien = 2;
+                    $nomor_rm = $arpost['identitas'];
+                }
+
+                if (empty($error)) {
+
+                    if ($arpost['jenis_identitas'] == 'nik') {
+                        $sqld = "select * from ps_pendaftaran_online where no_identitas = ? and id_jadwal_dokter = ? and tgl_daftar = ? and hapus=\"0\"";
+                        $stmt = mysqli_prepare($db_result, $sqld);
+                        mysqli_stmt_bind_param($stmt, "sis", $no_identitas, $gid2, $ndate);
+                    } else if ($arpost['jenis_identitas'] == 'rm') {
+                        $sqld = "select * from ps_pendaftaran_online where nomor_rm = ? and id_jadwal_dokter = ? and tgl_daftar = ? and hapus=\"0\"";
+                        $stmt = mysqli_prepare($db_result, $sqld);
+                        mysqli_stmt_bind_param($stmt, "sis", $nomor_rm, $gid2, $ndate);
+                    }
+                    mysqli_stmt_execute($stmt);
+                    $result = mysqli_stmt_get_result($stmt);
+                    $ndata = mysqli_num_rows($result);
+                    mysqli_stmt_close($stmt);
+                    if ($ndata == 0) {
+                        mysqli_begin_transaction($db_result);
+                        $sqld1 = "select coalesce(max(no_antri), 0) + 1 from ps_pendaftaran_online where id_jadwal_dokter =? and tgl_daftar=\"$ndate\" and hapus=\"0\" for update";
+                        $stmt1 = mysqli_prepare($db_result, $sqld1);
+                        mysqli_stmt_bind_param($stmt1, "i", $gid2);
+                        mysqli_stmt_execute($stmt1);
+                        mysqli_stmt_bind_result($stmt1, $next_no_antri);
+                        mysqli_stmt_fetch($stmt1);
+                        mysqli_stmt_close($stmt1);
+
+                        if ($act == 'bpjs') {
+                            $id_asuransi = 1;
+                            $nomor_asuransi = $arpost['nomor_asuransi'];
+                        } else {
+                            $id_asuransi = 0;
+                            $nomor_asuransi = '';
+                        }
+
+                        $vdata = "nama_pasien, id_asuransi, tgl_lahir, jenis_kelamin, identitas_pasien, no_identitas, nomor_rm, nomor_asuransi, identitas, tgl_daftar, id_instalasi, id_jadwal_dokter, no_antri, jenis_daftar, hapus, tgl_insert";
+
+                        $sqld2 = "insert into ps_pendaftaran_online ($vdata) values (?, ?, ?, ?, ?, ?, ?, ?, \"0\", ?, ?, ?, ?, \"2\", \"0\", ?)";
+
+                        $stmt2 = mysqli_prepare($db_result, $sqld2);
+                        mysqli_stmt_bind_param(
+                            $stmt2,
+                            "sisiissssiiis", // sesuaikan jumlah/tipe data
+                            $nama_pasien,
+                            $id_asuransi,
+                            $tgl_lahir,
+                            $jenis_kelamin,
+                            $identitas_pasien,
+                            $no_identitas,
+                            $nomor_rm,
+                            $nomor_asuransi,
+                            $ndate,
+                            $gid,
+                            $gid2,
+                            $next_no_antri,
+                            $ndatetime
+                        );
+                        $sukses = mysqli_stmt_execute($stmt2);
+                        mysqli_stmt_close($stmt2);
+
+                        if ($sukses) {
+                            mysqli_commit($db_result);
+                            echo "
+                            <script>
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '<span style=\"font-family: Source Sans Pro; font-size:25px;\"><b>Pengisian Data Berhasil</b></span>',
+                                    html: '<span style=\"font-family: Source Sans Pro; font-size:18px;\">Silahkan lakukan konfirmasi data</span>',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                }).then(() => {
+                                    window.location.href = '$link_back&act2=konfirmasi&gid=$gid&gid2=$gid2&gid3=$next_no_antri';
+                                });
+                            </script>
+                            ";
+                        } else {
+                            mysqli_rollback($db_result);
+                            echo "
+                            <script>
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: '<span style=\"font-family: Source Sans Pro; font-size:25px;\"><b>Pengisian Data Gagal</b></span>',
+                                    html: '<span style=\"font-family: Source Sans Pro; font-size:18px;\">Silahkan isi ulang formulir</span>',
+                                    showConfirmButton: false,
+                                    timer: 3000
+                                }).then(() => {
+                                    window.location.href = '$link_back&act2=$act2&gid=$gid&gid2=$gid2&gket=$gket&act3=input';
+                                });
+                            </script>
+                            ";
+                        }
+                    } else {
+                        $nket = "<div class=\"alert alert-warning\">No.KTP/NIK/RM ini sudah melakukan pendaftaran</div>";
+                        echo "<div class=\"row\"><div class=\"col-md-12\">$nket</div></div>
+                        <meta http-equiv=\"refresh\" content=\"2;url=$link_back&act2=$act2&gid=$gid&gid2=$gid2&gket=$gket&act3=input\">";
+                    }
+                } else {
+                    echo "
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: '<span style=\"font-family: Source Sans Pro; font-size:25px;\"><b>Pengisian Data Gagal</b></span>',
+                                html: '<span style=\"font-family: Source Sans Pro; font-size:18px;\">$error</span>',
+                                showConfirmButton: false,
+                                timer: 3000
+                            }).then(() => {
+                                window.location.href = '$link_back&act2=$act2&gid=$gid&gid2=$gid2&gket=$gket&act3=input';
+                            });
+                        </script>
+                        ";
+                }
+            }
 
             include "formulir.php";
             break;
-
-        case "proses":
-            if (count($_POST) > 0) {
-                foreach ($_POST as $pkey => $pvalue) {
-                    $post1 = mysqli_escape_string($db_result, $pvalue);
-                    $post1 = preg_replace('/\s+/', ' ', $post1);
-                    $post1 = trim($post1);
-
-                    $arpost[$pkey] = "$post1";
-                }
-                extract($arpost);
-            }
-
-            $error = "";
-            $error .= (!ctype_digit($arpost['identitas'])) ? "&bull; Format isian hanya boleh angka 0-9<br/>" : "";
-            if ($arpost['jenis_identitas'] == 'nik') {
-                $error .= (strlen($arpost['identitas']) != 16) ? "&bull; No.KTP/NIK harus 16 digit<br/>" : "";
-            } else if ($arpost['jenis_identitas'] == 'rm') {
-                $error .= (strlen($arpost['identitas']) != 7) ? "&bull; Nomor RM harus 7 digit<br/>" : "";
-            }
-
-            if (empty($error)) {
-            }
     }
 }
 
