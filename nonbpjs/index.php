@@ -183,20 +183,11 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
                     $nama_dokter = NamaGabung($nama_pegawai, $gelar_depan, $gelar_belakang);
 
                     $collapseId = "menu_$id_pegawai";
-                    $btn_jam = '';
-                    $tbody_all = '';
-                    $first = true;
+                    $tbody = '';
 
                     foreach ($data_praktek_per_dokter[$id_pegawai] as $data) {
                         $idJadwal = $data['id_jadwal'];
                         $modalId = "modal_" . $id_pegawai . "_" . $idJadwal;
-                        $statusId = "status_" . $id_pegawai . "_" . $idJadwal;
-
-                        // tombol jam
-                        $activeClass = $first ? "btn-info active" : "btn-default";
-                        $btn_jam .= "
-                            <a class=\"btn $activeClass btn-jam\" data-target=\"$statusId\" data-dokter=\"$id_pegawai\">{$data['jam_praktek']}</a>
-                        ";
 
                         if ($data['status_ganti'] == '0') {
                             $bg = "background-color: rgba(179, 0, 0, 0.2);";
@@ -224,37 +215,17 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
                             }
                         }
 
-                        // $konten_box_body .= "
-                        // <div class=\"row\">
-                        //     <div class =\"col-md-12\">
-                        //         <div class=\"box\">
-                        //             <a $link>
-                        //             <div class=\"box-body\" style=\"$bg\">
-                        //                 <div class=\"col-sm-12\">
-                        //                     <h4>" . $data['jam_praktek'] . "</h4>
-                        //                     <p>Status : $stts</p>
-                        //                     $progres_bar
-                        //                 </div>
-                        //             </div>
-                        //             </a>
-                        //         </div>
-                        //     </div>
-                        // </div>
-                        // ";
 
-                        // tabel per jadwal (disembunyikan kecuali yang pertama)
-                        $hidden = $first ? "" : "style='display:none;'";
-                        $tbody_all .= "
-                            <tbody id=\"$statusId\" $hidden>
+                        $tbody .= "
+                            <tbody>
                                 <tr>
+                                    <td>{$data['jam_praktek']}</td>
                                     <td>{$data['kuota_umum_asuransi']}</td>
                                     <td>$stts</td>
                                     <td>$btn_aksi</td>
                                 </tr>
                             </tbody>
                         ";
-
-                        $first = false;
 
                         //modal pop-up
                         echo "
@@ -309,20 +280,18 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
                                     <h2 class=\"box-title\">$nama_dokter</h2>
                                 </div>
 
-                                    <div class=\"box-body\">
-                                        $btn_jam
-                                        <div class=\"clearfix\"></div>
-                                        <br/>
+                                    <div class=\"box-body\" style=\"min-height: 200px;\">
                                         <div class=\"table-responsive\">
                                             <table class=\"table table-bordered table-striped datatable\">
                                                 <thead>
                                                     <tr>
+                                                        <th width=\"150\">Jam Praktek</th>
                                                         <th width=\"150\">Kuota Pasien</th>
                                                         <th width=\"150\">Status</th>
-                                                        <th>Aksi</th>
+                                                        <th width=\"50\">Aksi</th>
                                                     </tr>
                                                 </thead>
-                                                $tbody_all
+                                                $tbody
                                             </table>
                                         </div>
                                     </div>
@@ -351,30 +320,3 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
             break;
     }
 }
-
-?>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.btn-jam').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var dokterId = this.getAttribute('data-dokter');
-                var targetId = this.getAttribute('data-target');
-
-                document.querySelectorAll('.btn-jam[data-dokter="' + dokterId + '"]').forEach(function(b) {
-                    b.classList.remove('btn-info', 'active');
-                    b.classList.add('btn-default');
-                });
-
-                this.classList.remove('btn-default');
-                this.classList.add('btn-info', 'active');
-
-                document.querySelectorAll('tbody[id^="status_' + dokterId + '_"]').forEach(function(tb) {
-                    tb.style.display = 'none';
-                });
-
-                document.getElementById(targetId).style.display = '';
-            });
-        });
-    });
-</script>
