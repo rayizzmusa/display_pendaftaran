@@ -217,8 +217,7 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                         let pesan = `No. ${jenis_identitas.toUpperCase()} ${identitas} ditemukan.`;
                         $('#notifikasi-pasien').html(`<small style="color:green;">${pesan}</small>`);
 
-                    }
-                    if (response.status === "error") {
+                    } else if (response.status === "error") {
                         $('#notifikasi-pasien').html('<small style="color:red;">' + response.message + '</small>');
                     }
                 },
