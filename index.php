@@ -160,6 +160,15 @@ $default = "a_disp_pendaftaran";
     </style>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../plugins/jQuery/jQuery-3.3.1.js"></script>
+    <script>
+        function PopUp(a) {
+            params = 'width=' + screen.width;
+            params += ', height=' + screen.height;
+            params += ', top=0, left=0'
+            params += ', fullscreen=yes';
+            window.open(a, "_blank", params);
+        }
+    </script>
 </head>
 
 <body class="hold-transition sidebar-mini skin-blue">

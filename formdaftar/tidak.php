@@ -110,6 +110,8 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                         $sukses = mysqli_stmt_execute($stmt2);
                         mysqli_stmt_close($stmt2);
 
+                        // echo "window.location.href = '$link_back&act2=konfirmasi&gid=$gid&gid2=$gid2&gid3=$id_daftar';";
+
                         if ($sukses) {
                             $id_daftar = mysqli_insert_id($db_result);
                             mysqli_commit($db_result);
@@ -120,9 +122,10 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                                     title: '<span style=\"font-family: Source Sans Pro; font-size:25px;\"><b>Pengisian Data Berhasil</b></span>',
                                     html: '<span style=\"font-family: Source Sans Pro; font-size:18px;\">Silahkan lakukan konfirmasi data</span>',
                                     showConfirmButton: false,
-                                    timer: 3000
-                                }).then(() => {
-                                    window.location.href = '$link_back&act2=konfirmasi&gid=$gid&gid2=$gid2&gid3=$id_daftar';
+                                    timer: 3000,
+                                    didClose: () => {
+                                        PopUp('http://localhost:8080/cetak/popup/daftarpoli/$id_daftar/$gid2');
+                                    }
                                 });
                             </script>
                             ";
