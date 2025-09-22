@@ -111,6 +111,7 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                         mysqli_stmt_close($stmt2);
 
                         // echo "window.location.href = '$link_back&act2=konfirmasi&gid=$gid&gid2=$gid2&gid3=$id_daftar';";
+                        // http://localhost:8080/cetak/popup/daftarpoli/$id_daftar/$gid2
 
                         if ($sukses) {
                             $id_daftar = mysqli_insert_id($db_result);
@@ -124,7 +125,7 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                                     showConfirmButton: false,
                                     timer: 3000,
                                     didClose: () => {
-                                        PopUp('http://localhost:8080/cetak/popup/daftarpoli/$id_daftar/$gid2');
+                                        PopUp('http://localhost:8080/$default/cetak/index.php?gid=$id_daftar&gid2=$gid2');
                                     }
                                 });
                             </script>

@@ -129,7 +129,7 @@ echo "<div class=\"row\">
                                             <div class=\"clearfix\"></div>
                                             <br/>
                                             <div class=\"alert alert-info\">
-                                                *** Pastikan data yang diisi sesuai dengan identitas pasien sebelum mencetak tiket
+                                                *** Pastikan data yang diisi sesuai dengan identitas pasien sebelum mendaftar
                                             </div>
                                         </div>
                                     </div>
