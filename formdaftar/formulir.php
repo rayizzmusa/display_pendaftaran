@@ -33,12 +33,12 @@ if ($gket == "ya") {
 
 
 if ($act == "bpjs") {
-    $form = "<div class=\"form-group\">
-                    <label class=\"col-sm-3\">Nomor BPJS <span style=\"color:red\">*</span></label>
-                    <div class=\"col-sm-9\">
+    $form = "<div class=\"col-md-3\"><div class=\"form-group\">
+                    <label class=\"col-sm-12\">Nomor BPJS <span style=\"color:red\">*</span></label>
+                    <div class=\"col-sm-12\">
                         <input type=\"text\" name=\"nomor_asuransi\" id=\"nomor-asuransi\" class=\"form-control\" $readonly required/>
                     </div>
-                </div>";
+                </div></div>";
 } else if ($act == "nonbpjs") {
     $form = "";
 }
@@ -56,70 +56,91 @@ echo "<div class=\"row\">
                     <div class=\"box-body\">
                         <form role=\"form\" class=\"form-horizontal\" method=\"post\" action=\"$link_back&act2=$act2&gid=$gid&gid2=$gid2&gket=$gket&act3=proses\" enctype=\"multipart/form-data\">
                             <div class=\"row\">
-                                <div class=\"col-md-6\">
-                                    <div class=\"form-group\">
-                                        <label class=\"col-sm-3\">Hari/Tanggal</label>
-                                        <div class=\"col-sm-6\">
-                                            : $hari/$ftgl1
-                                        </div>
-                                    </div>
-                                    <div class=\"form-group\">
-                                        <label class=\"col-sm-3\">Dokter</label>
-                                        <div class=\"col-sm-6\">
-                                            : $nama_dokter
-                                        </div>
-                                    </div>
-                                    <div class=\"form-group\">
-                                        <label class=\"col-sm-3\">Jam Praktek</label>
-                                        <div class=\"col-sm-6\">
-                                            : $jam_praktek
-                                        </div>
-                                    </div>
-                                    <div class=\"form-group\" >
-                                            <label class=\"col-sm-10 text-center\">Periksa dan Isi identitas berdasarkan</label>
-                                            <div class=\"col-sm-10 text-center\">
-                                                    <input type=\"radio\" name=\"jenis_identitas\" id=\"radio-nik\" value=\"nik\" required/> No.Ktp/NIK
-                                                    <input type=\"radio\" name=\"jenis_identitas\" id=\"radio-rm\" value=\"rm\" style=\"margin-left: 85px;\"> No.RM
+                                <div class=\"col-md-12\">
+                                    <div class=\"col-md-4\">
+                                        <div class=\"form-group\">
+                                            <label class=\"col-sm-3\">Hari/Tanggal</label>
+                                            <div class=\"col-sm-9\">
+                                                : $hari/$ftgl1
                                             </div>
+                                        </div>
                                     </div>
-                                    <div class=\"form-group\">
-                                        <label class=\"col-sm-3\">No. KTP/NIK/RM <span style=\"color:red\">*</span></label>
-                                        <div class=\"col-sm-9\" >
-                                            <div class=\"input-group\">
-                                                <input type=\"text\" name=\"identitas\" id=\"identitas-pasien\" class=\"form-control\" required/>
-                                                <input type=\"hidden\" name=\"kode_booking\" value=\"$kode_booking\"/>
-                                                <span class=\"input-group-btn\">
-                                                    <button type=\"button\" style=\"margin-left: 0px\" class=\"btn bg-maroon\" id=\"btn-cek\"><i class=\"fa fa-search\"></i></button>
-                                                </span>
+                                    <div class=\"col-md-4\">
+                                        <div class=\"form-group\">
+                                            <label class=\"col-sm-3\">Dokter</label>
+                                            <div class=\"col-sm-9\">
+                                                : $nama_dokter
                                             </div>
-                                            <small>Periksa apakah no.ktp/nik/rm sudah terdaftar sebagai pasien RSU UMM</small>
-                                            <div id=\"notifikasi-pasien\"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class=\"col-md-4\">
+                                        <div class=\"form-group\">
+                                            <label class=\"col-sm-3\">Jam Praktek</label>
+                                            <div class=\"col-sm-9\">
+                                                : $jam_praktek
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class=\"clearfix\"></div>
+                                            <br/>
 
-                                <div class=\"col-md-6\">
-                                    <div class=\"form-group\">
-                                        <label class=\"col-sm-3\">Nama Lengkap <span style=\"color:red\">*</span></label>
-                                        <div class=\"col-sm-9\">
-                                            <input type=\"text\" name=\"nama_pasien\" id=\"nama-pasien\" class=\"form-control\" $readonly required/>
+                            <div class=\"row\">
+                                <div class=\"col-md-12\">
+                                    <div class=\"col-md-3\">
+                                        <div class=\"form-group\" >
+                                                <label class=\"col-sm-10\">Periksa dan Isi identitas berdasarkan</label>
+                                                <div class=\"col-sm-10\">
+                                                        <input type=\"radio\" name=\"jenis_identitas\" id=\"radio-nik\" value=\"nik\" required/> No.Ktp/NIK
+                                                        <input type=\"radio\" name=\"jenis_identitas\" id=\"radio-rm\" value=\"rm\" style=\"margin-left: 85px;\"> No.RM
+                                                </div>
+                                        </div>
+                                        <div class=\"form-group\">
+                                            <div class=\"col-sm-10\" >
+                                                <div class=\"input-group\">
+                                                    <input type=\"text\" name=\"identitas\" id=\"identitas-pasien\" class=\"form-control\" required/>
+                                                    <input type=\"hidden\" name=\"kode_booking\" value=\"$kode_booking\"/>
+                                                    <span class=\"input-group-btn\">
+                                                        <button type=\"button\" style=\"margin-left: 0px\" class=\"btn bg-maroon\" id=\"btn-cek\"><i class=\"fa fa-search\"></i></button>
+                                                    </span>
+                                                </div>
+                                                <small>Periksa apakah no.ktp/nik/rm sudah terdaftar sebagai pasien RSU UMM</small>
+                                                <div id=\"notifikasi-pasien\"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class=\"col-md-3\">
+                                        <div class=\"form-group\">
+                                            <label class=\"col-sm-12\">Nama Lengkap <span style=\"color:red\">*</span></label>
+                                            <div class=\"col-sm-12\">
+                                                <input type=\"text\" name=\"nama_pasien\" id=\"nama-pasien\" class=\"form-control\" $readonly required/>
+                                            </div>
                                         </div>
                                     </div>
                                     $form
-                                    <div class=\"form-group\">
-                                        <label class=\"col-sm-3\">Tanggal Lahir <span style=\"color:red\">*</span></label>
-                                        <div class=\"col-sm-9\">
-                                            <input type=\"text\" name=\"tgl_lahir\" id=\"tgl-lahir\" class=\"form-control $datepicker\" autocomplete =\"off\" placeholder=\"yyyy-mm-dd\" $readonly required/>
+
+                                    <div class=\"col-md-3\">
+                                        <div class=\"form-group\">
+                                            <label class=\"col-sm-12\">Tanggal Lahir <span style=\"color:red\">*</span></label>
+                                            <div class=\"col-sm-12\">
+                                                <input type=\"text\" name=\"tgl_lahir\" id=\"tgl-lahir\" class=\"form-control $datepicker\" autocomplete =\"off\" placeholder=\"yyyy-mm-dd\" $readonly required/>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class=\"form-group\">
-                                        <label class=\"col-sm-3\">Jenis Kelamin <span style=\"color:red\">*</span></label>
-                                        <div class=\"col-sm-6\">
-                                            <div class=\"col-sm-6\">
-                                                <input type=\"radio\" name=\"jenis_kelamin\" id=\"jk-laki\" value=\"1\" $radioStyle required> Laki-laki
-                                            </div>
-                                            <div class=\"col-sm-6\">
-                                                <input type=\"radio\" name=\"jenis_kelamin\" id=\"jk-perempuan\" value=\"2\" $radioStyle > Perempuan
+
+                                    <div class=\"col-md-3\">
+                                        <div class=\"form-group\">
+                                            <label class=\"col-sm-12\">Jenis Kelamin <span style=\"color:red\">*</span></label>
+                                            <div class=\"col-sm-12\">
+                                                <div class=\"col-sm-12\">
+                                                    <input type=\"radio\" name=\"jenis_kelamin\" id=\"jk-laki\" value=\"1\" $radioStyle required> Laki-laki
+                                                </div>
+                                                <div class=\"col-sm-12\">
+                                                    <input type=\"radio\" name=\"jenis_kelamin\" id=\"jk-perempuan\" value=\"2\" $radioStyle > Perempuan
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
