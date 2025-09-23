@@ -98,7 +98,7 @@ echo "<div class=\"row\">
                                                 </div>
                                         </div>
                                         <div class=\"form-group\">
-                                            <div class=\"col-sm-10\" >
+                                            <div class=\"col-sm-12\">
                                                 <div class=\"input-group\">
                                                     <input type=\"text\" name=\"identitas\" id=\"identitas-pasien\" class=\"form-control\" required/>
                                                     <input type=\"hidden\" name=\"kode_booking\" value=\"$kode_booking\"/>

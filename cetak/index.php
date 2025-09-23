@@ -4,7 +4,8 @@ include "../../setting/kon.php";
 include "../../setting/function.php";
 include "../../setting/variable.php";
 
-
+$gid  = $_GET['gid'] ?? null;
+$gid2 = $_GET['gid2'] ?? null;
 $sqld = "select * from ps_pendaftaran_online where id=\"$gid\" and id_jadwal_dokter =\"$gid2\" and hapus =\"0\"";
 $data = mysqli_query($db_result, $sqld);
 $ndata = mysqli_num_rows($data);
@@ -28,7 +29,16 @@ if ($ndata > 0) {
     $pasien = $fdata['nama_pasien'] . " - " . $no_identitas;
 
     $kode_booking = $fdata['kode_booking'];
-    $no_antri = $fdata['no_antri'];
+
+    $id_jadwal_dokter = $fdata['id_jadwal_dokter'];
+    $sJadwalDokter = JadwalDokter();
+    $jam_awal = $sJadwalDokter[$id_jadwal_dokter]['jam_awal'];
+    if ($jam_awal <= "12:00") {
+        $abjad = "A-";
+    } else if ($jam_awal >= "12:00") {
+        $abjad = "B-";
+    }
+    $no_antri = "$abjad" . $fdata['no_antri'];
 
     $jenis_daftar = ($fdata['jenis_daftar'] == '2') ? "Go Show" : "";
 
@@ -65,17 +75,18 @@ if ($ndata > 0) {
             }
 
             * {
-                margin: 10px;
+                margin: 5px;
                 padding: 0;
             }
 
             body {
                 font-size: 25px;
-                line-height: 2.0;
+                line-height: 1.5;
             }
 
             p {
-                line-height: 1.5;
+                line-height: 1.0;
+                font-size: 23px;
             }
         }
     </style>
@@ -90,10 +101,13 @@ if ($ndata > 0) {
         <hr style="border: 0; border-top: 5px solid black; margin: 20px 100px;">
         <div>Kode Booking : <b><?= $kode_booking ?></b></div>
         <div><b>Harap Check-in 30 menit sebelum praktek</b></div>
-        <p style="font-size: 200px; margin: 0px 0;"><?= $no_antri ?></p>
+        <p style="font-size: 150px; margin: 0px 0;"><?= $no_antri ?></p>
         <div><b><?= $jenis_daftar ?></b></div>
         <hr style="border: 0; border-top: 5px solid black; margin: 20px 100px;">
         <div><b><?= $poli ?></b></div>
+        <br>
+        <p><em>*) kode antrian A akan dipanggil pada jam 07:00 sd selesai </em></p>
+        <p><em>*) kode antrian B akan dipanggil pada jam 12:00 sd selesai </em></p>
     </center>
 
 </body>
