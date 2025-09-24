@@ -12,35 +12,43 @@ $ndata = mysqli_num_rows($data);
 if ($ndata > 0) {
     $fdata = mysqli_fetch_assoc($data);
 
-
-    if ($fdata['id_asuransi'] == '0') {
-        $jenis_pasien = "Pasien Umum/Asuransi";
-    } else if ($fdata['id_asuransi'] == '1') {
+    $id_asuransi = $fdata['id_asuransi'];
+    if ($id_asuransi == '0') {
+        $jenis_pasien = "Pasien Umum";
+        $no_asuransi = "";
+    } else if ($id_asuransi == '1') {
         $jenis_pasien = "Pasien BPJS";
+        $no_asuransi = "/ " . $fdata['nomor_asuransi'];
     }
 
     date_default_timezone_set('Asia/Jakarta');
     $jam = date("H:i:s");
-    $tgl_daftar = TglFormat1($fdata['tgl_daftar']);
+    $tgl_daftar1 = TglFormat4($fdata['tgl_daftar']);
+    $tgl_daftar2 = TglFormat1($fdata['tgl_daftar']);
     // $jam = substr($fdata['tgl_insert'], 11, 18);
-    $waktu = "$tgl_daftar $jam";
+    $waktu = "$tgl_daftar1 Pukul $jam";
 
-    $no_identitas = !empty($fdata['no_identitas']) ? $fdata['no_identitas'] : $fdata['nomor_rm'];
-    $pasien = $fdata['nama_pasien'] . " - " . $no_identitas;
+    $no_rm = !empty($fdata['nomor_rm']) ? "/ " . $fdata['nomor_rm'] : "";
+    $pasien = $fdata['nama_pasien'] . " $no_rm" . " $no_asuransi";
 
     $kode_booking = $fdata['kode_booking'];
 
     $id_jadwal_dokter = $fdata['id_jadwal_dokter'];
     $sJadwalDokter = JadwalDokter();
     $jam_awal = $sJadwalDokter[$id_jadwal_dokter]['jam_awal'];
-    if ($jam_awal <= "12:00") {
+    $jam_akhir = $sJadwalDokter[$id_jadwal_dokter]['jam_akhir'];
+    if ($jam_awal <= "12:00" && $id_asuransi == '1') {
         $abjad = "A-";
-    } else if ($jam_awal >= "12:00") {
+    } else if ($jam_awal > "12:00" && $id_asuransi == '1') {
         $abjad = "B-";
+    } else if ($jam_awal <= "12:00" && $id_asuransi == '0') {
+        $abjad = "C-";
+    } else if ($jam_awal > "12:00" && $id_asuransi == '0') {
+        $abjad = "D-";
     }
     $no_antri = "$abjad" . $fdata['no_antri'];
 
-    $jenis_daftar = ($fdata['jenis_daftar'] == '2') ? "Go Show" : "";
+    $jenis_daftar = ($fdata['jenis_daftar'] == '2') ? "Admisi/TPP" : "";
 
     $id_poli = $fdata['id_instalasi'];
     $nama_poli = SelPoli($id_poli)[$id_poli]['nama_poli'];
@@ -81,7 +89,7 @@ if ($ndata > 0) {
 
             body {
                 font-size: 25px;
-                line-height: 1.5;
+                line-height: 1.0;
             }
 
             p {
@@ -92,22 +100,23 @@ if ($ndata > 0) {
     </style>
 
     <center>
-        <div style="text-transform: uppercase;">
-            <b><?= $jenis_pasien ?></b>
-        </div>
-        <div><b>RSU Universitas Muhammadiyah Malang</b></div>
-        <div><?= $waktu ?></div>
-        <div><?= $pasien ?></div>
+        <div>Faskes Tingkat Lanjut</div>
+        <div>RSU Universitas Muhammadiyah Malang</div>
+        <div><b><?php echo $jenis_daftar ?></b></div>
         <hr style="border: 0; border-top: 5px solid black; margin: 20px 100px;">
-        <div>Kode Booking : <b><?= $kode_booking ?></b></div>
-        <div><b>Harap Check-in 30 menit sebelum praktek</b></div>
-        <p style="font-size: 150px; margin: 0px 0;"><?= $no_antri ?></p>
-        <div><b><?= $jenis_daftar ?></b></div>
+        <div>Kode Booking : <b><?php echo $kode_booking ?></b></div>
+        <p style="font-size: 150px; margin: 0px 0;"><?php echo $no_antri ?></p>
+        <div><?php echo $pasien ?></div>
+        <p><?php echo $jenis_pasien ?></p>
         <hr style="border: 0; border-top: 5px solid black; margin: 20px 100px;">
-        <div><b><?= $poli ?></b></div>
+        <div><b><?php echo $poli ?></b></div>
+        <div>Jam Praktek : <?php echo " $tgl_daftar2 " . substr($jam_awal, 0, 5) . " - " . substr($jam_akhir, 0, 5); ?></div>
         <br>
-        <p><em>*) kode antrian A akan dipanggil pada jam 07:00 sd selesai </em></p>
-        <p><em>*) kode antrian B akan dipanggil pada jam 12:00 sd selesai </em></p>
+        <p><b>Harap Check-in 30 menit sebelum praktek</b></p>
+        <p><em>*) kode antrian A dan C akan dipanggil pada jam 07:00 sd selesai </em></p>
+        <p><em>*) kode antrian B dan D akan dipanggil pada jam 12:00 sd selesai </em></p>
+        <br>
+        <p><?php echo $waktu ?></p>
     </center>
 
 </body>

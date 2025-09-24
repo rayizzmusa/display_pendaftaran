@@ -321,9 +321,5 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
         case "daftar":
             include "formdaftar/index.php";
             break;
-
-        case "konfirmasi":
-            include "konfirmasi/index.php";
-            break;
     }
 }
