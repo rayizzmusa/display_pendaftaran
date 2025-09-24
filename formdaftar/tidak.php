@@ -91,7 +91,7 @@ if (preg_match("/\btidak.php\b/i", $_SERVER['REQUEST_URI'])) {
                         $stmt2 = mysqli_prepare($db_result, $sqld2);
                         mysqli_stmt_bind_param(
                             $stmt2,
-                            "sisiissssiiiss", // sesuaikan jumlah/tipe data
+                            "sisiissssiiiss",
                             $nama_pasien,
                             $id_asuransi,
                             $tgl_lahir,

@@ -56,7 +56,6 @@ echo "<div class=\"row\">
                     <div class=\"box-body\">
                         <form role=\"form\" class=\"form-horizontal\" method=\"post\" action=\"$link_back&act2=$act2&gid=$gid&gid2=$gid2&gket=$gket&act3=proses\" enctype=\"multipart/form-data\">
                             <div class=\"row\">
-                                <div class=\"col-md-12\">
                                     <div class=\"col-md-4\">
                                         <div class=\"form-group\">
                                             <label class=\"col-sm-3\">Hari/Tanggal</label>
@@ -82,14 +81,12 @@ echo "<div class=\"row\">
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                             </div>
                             <div class=\"clearfix\"></div>
                                             <br/>
 
                             <div class=\"row\">
-                                <div class=\"col-md-12\">
-                                    <div class=\"col-md-3\">
+                                    <div class=\"col-md-12\">
                                         <div class=\"form-group\" >
                                                 <label class=\"col-sm-10\">Periksa dan Isi identitas berdasarkan</label>
                                                 <div class=\"col-sm-10\">
@@ -111,7 +108,11 @@ echo "<div class=\"row\">
                                             </div>
                                         </div>
                                     </div>
+                            </div>
+                            <div class=\"clearfix\"></div>
+                                            <br/>
 
+                            <div class=\"row\">
                                     <div class=\"col-md-3\">
                                         <div class=\"form-group\">
                                             <label class=\"col-sm-12\">Nama Lengkap <span style=\"color:red\">*</span></label>
@@ -145,17 +146,14 @@ echo "<div class=\"row\">
                                         </div>
                                     </div>
 
-                                    <div class=\"row\">
-                                        <div class=\"col-md-12\">
-                                            <div class=\"clearfix\"></div>
-                                            <br/>
-                                            <div class=\"alert alert-info\">
-                                                *** Pastikan data yang diisi sesuai dengan identitas pasien sebelum mendaftar
-                                            </div>
+                                    <div class=\"col-md-12\">
+                                        <div class=\"clearfix\"></div>
+                                        <br/>
+                                        <div class=\"alert alert-info\">
+                                            *** Pastikan data yang diisi sesuai dengan identitas pasien sebelum mendaftar
                                         </div>
                                     </div>
 
-                                </div>
                                     <div class=\"form-group\">
                                         <div class=\"col-md-12 text-center\">
                                             <a href=\"$link_back&act2=poli&gid=$gid\" class=\"btn bg-navy\"><i class=\"fa fa-caret-left\"></i> Kembali</a>

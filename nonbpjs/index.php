@@ -280,7 +280,7 @@ if (preg_match("/\bindex.php\b/i", $_SERVER['REQUEST_URI'])) {
                                     <h2 class=\"box-title\">$nama_dokter</h2>
                                 </div>
 
-                                    <div class=\"box-body\" style=\"min-height: 200px;\">
+                                    <div class=\"box-body\" style=\"min-height: 150px;\">
                                         <div class=\"table-responsive\">
                                             <table class=\"table table-bordered table-striped datatable\">
                                                 <thead>
