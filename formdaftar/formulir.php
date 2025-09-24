@@ -56,6 +56,7 @@ echo "<div class=\"row\">
                     <div class=\"box-body\">
                         <form role=\"form\" class=\"form-horizontal\" method=\"post\" action=\"$link_back&act2=$act2&gid=$gid&gid2=$gid2&gket=$gket&act3=proses\" enctype=\"multipart/form-data\">
                             <div class=\"row\">
+                                <div class=\"col-md-12\">
                                     <div class=\"col-md-4\">
                                         <div class=\"form-group\">
                                             <label class=\"col-sm-3\">Hari/Tanggal</label>
@@ -81,18 +82,20 @@ echo "<div class=\"row\">
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                             <div class=\"clearfix\"></div>
                                             <br/>
 
                             <div class=\"row\">
-                                    <div class=\"col-md-12\">
-                                        <div class=\"form-group\" >
-                                                <label class=\"col-sm-10\">Periksa dan Isi identitas berdasarkan</label>
-                                                <div class=\"col-sm-10\">
-                                                        <input type=\"radio\" name=\"jenis_identitas\" id=\"radio-nik\" value=\"nik\" required/> No.Ktp/NIK
-                                                        <input type=\"radio\" name=\"jenis_identitas\" id=\"radio-rm\" value=\"rm\" style=\"margin-left: 85px;\"> No.RM
-                                                </div>
+                                <div class=\"col-md-12\">
+                                    <div class=\"col-sm-3\">
+                                        <div class=\"form-group\">
+                                            <label class=\"col-sm-12\">Periksa dan Isi identitas berdasarkan</label>
+                                            <div class=\"col-sm-12\">
+                                                    <input type=\"radio\" name=\"jenis_identitas\" id=\"radio-nik\" value=\"nik\" required/> No.Ktp/NIK
+                                                    <input type=\"radio\" name=\"jenis_identitas\" id=\"radio-rm\" value=\"rm\" style=\"margin-left: 85px;\"> No.RM
+                                            </div>
                                         </div>
                                         <div class=\"form-group\">
                                             <div class=\"col-sm-12\">
@@ -108,59 +111,59 @@ echo "<div class=\"row\">
                                             </div>
                                         </div>
                                     </div>
-                            </div>
-                            <div class=\"clearfix\"></div>
+
+                                    <div class=\"col-md-9\">
+                                        <div class=\"col-md-3\">
+                                            <div class=\"form-group\">
+                                                <label class=\"col-sm-12\">Nama Lengkap <span style=\"color:red\">*</span></label>
+                                                <div class=\"col-sm-12\">
+                                                    <input type=\"text\" name=\"nama_pasien\" id=\"nama-pasien\" class=\"form-control\" $readonly required/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        $form
+
+                                        <div class=\"col-md-3\">
+                                            <div class=\"form-group\">
+                                                <label class=\"col-sm-12\">Tanggal Lahir <span style=\"color:red\">*</span></label>
+                                                <div class=\"col-sm-12\">
+                                                    <input type=\"text\" name=\"tgl_lahir\" id=\"tgl-lahir\" class=\"form-control $datepicker\" autocomplete =\"off\" placeholder=\"yyyy-mm-dd\" $readonly required/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=\"col-md-3\">
+                                            <div class=\"form-group\">
+                                                <label class=\"col-sm-12\">Jenis Kelamin <span style=\"color:red\">*</span></label>
+                                                <div class=\"col-sm-12\">
+                                                    <div class=\"col-sm-12\">
+                                                        <input type=\"radio\" name=\"jenis_kelamin\" id=\"jk-laki\" value=\"1\" $radioStyle required> Laki-laki
+                                                    </div>
+                                                    <div class=\"col-sm-12\">
+                                                        <input type=\"radio\" name=\"jenis_kelamin\" id=\"jk-perempuan\" value=\"2\" $radioStyle > Perempuan
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=\"col-md-12\">
+                                            <div class=\"clearfix\"></div>
                                             <br/>
+                                            <div class=\"alert alert-info\">
+                                                *** Pastikan data yang diisi sesuai dengan identitas pasien sebelum mendaftar
+                                            </div>
+                                        </div>
 
-                            <div class=\"row\">
-                                    <div class=\"col-md-3\">
                                         <div class=\"form-group\">
-                                            <label class=\"col-sm-12\">Nama Lengkap <span style=\"color:red\">*</span></label>
-                                            <div class=\"col-sm-12\">
-                                                <input type=\"text\" name=\"nama_pasien\" id=\"nama-pasien\" class=\"form-control\" $readonly required/>
+                                            <div class=\"col-md-12 text-center\">
+                                                <a href=\"$link_back&act2=poli&gid=$gid\" class=\"btn bg-navy\"><i class=\"fa fa-caret-left\"></i> Kembali</a>
+                                                <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-print\"></i> Daftar</button>
                                             </div>
                                         </div>
                                     </div>
-                                    $form
-
-                                    <div class=\"col-md-3\">
-                                        <div class=\"form-group\">
-                                            <label class=\"col-sm-12\">Tanggal Lahir <span style=\"color:red\">*</span></label>
-                                            <div class=\"col-sm-12\">
-                                                <input type=\"text\" name=\"tgl_lahir\" id=\"tgl-lahir\" class=\"form-control $datepicker\" autocomplete =\"off\" placeholder=\"yyyy-mm-dd\" $readonly required/>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class=\"col-md-3\">
-                                        <div class=\"form-group\">
-                                            <label class=\"col-sm-12\">Jenis Kelamin <span style=\"color:red\">*</span></label>
-                                            <div class=\"col-sm-12\">
-                                                <div class=\"col-sm-12\">
-                                                    <input type=\"radio\" name=\"jenis_kelamin\" id=\"jk-laki\" value=\"1\" $radioStyle required> Laki-laki
-                                                </div>
-                                                <div class=\"col-sm-12\">
-                                                    <input type=\"radio\" name=\"jenis_kelamin\" id=\"jk-perempuan\" value=\"2\" $radioStyle > Perempuan
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class=\"col-md-12\">
-                                        <div class=\"clearfix\"></div>
-                                        <br/>
-                                        <div class=\"alert alert-info\">
-                                            *** Pastikan data yang diisi sesuai dengan identitas pasien sebelum mendaftar
-                                        </div>
-                                    </div>
-
-                                    <div class=\"form-group\">
-                                        <div class=\"col-md-12 text-center\">
-                                            <a href=\"$link_back&act2=poli&gid=$gid\" class=\"btn bg-navy\"><i class=\"fa fa-caret-left\"></i> Kembali</a>
-                                            <button type=\"submit\" class=\"btn btn-success\"><i class=\"fa fa-print\"></i> Daftar</button>
-                                        </div>
-                                    </div>
+                                </div>
                             </div>
+                            
                         </form>
                     </div>
                 </div>
